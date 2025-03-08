@@ -1,26 +1,38 @@
 import {
 	AutoFixHigh,
-	Brush,
+	DrawOutlined,
 	FormatColorFill,
 	NearMe,
 	Palette,
-	ShapeLine,
+	SaveOutlined,
 	Title
 } from '@mui/icons-material';
 import { Tab, Tabs } from '@mui/material';
-import { useState } from 'react';
 
-export default function Toolbar() {
-	const [value, setValue] = useState(0);
+export default function Toolbar({
+	show = false,
+	tool = 'pencil',
+	setTool,
+	showShapes
+}) {
+	console.log(tool);
 
 	const handleTabChange = (event, newValue) => {
-		setValue(newValue);
+		setTool(newValue);
+		if (newValue == 'draw') {
+			showShapes(true);
+		} else {
+			showShapes(false);
+		}
 	};
+	if (!show) {
+		return;
+	}
 
 	return (
 		<div className="left-nav-options">
 			<Tabs
-				value={value}
+				value={tool}
 				onChange={handleTabChange}
 				aria-label="tools"
 				orientation="vertical"
@@ -37,12 +49,13 @@ export default function Toolbar() {
 					}
 				}}
 			>
-				<Tab icon={<NearMe />} label="Select" />
-				<Tab icon={<Brush />} label="Brush" />
-				<Tab icon={<AutoFixHigh />} label="Eraser" />
-				<Tab icon={<FormatColorFill />} label="Bucket" />
-				<Tab icon={<Title />} label="Text" />
-				<Tab icon={<Palette />} label="Color" />
+				<Tab icon={<DrawOutlined />} label="Draw" value="draw" />
+				<Tab icon={<NearMe />} label="Select" value="select" />
+				<Tab icon={<AutoFixHigh />} label="Eraser" value="eraser" />
+				<Tab icon={<FormatColorFill />} label="Bucket" value="bucket" />
+				<Tab icon={<Title />} label="Text" value="text" />
+				<Tab icon={<Palette />} label="Color" value="color" />
+				<Tab icon={<SaveOutlined />} label="Export" value="export" />
 			</Tabs>
 		</div>
 	);

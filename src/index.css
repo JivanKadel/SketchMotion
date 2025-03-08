@@ -56,3 +56,12 @@ canvas {
 	display: flex;
 	flex-direction: column;
 }
+
+/* sketchMode Switch */
+.sketch-switch {
+	position: fixed;
+	top: 0;
+	right: 8px;
+	margin-top: 8px;
+	margin-right: 8px;
+}

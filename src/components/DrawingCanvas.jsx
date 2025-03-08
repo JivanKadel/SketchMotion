@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import CanvasManager from '../managers/CanvasManager';
-import Rectangle from '../shapes/Rectangle';
+// import Rectangle from '../shapes/Rectangle';
+import Circle from '../shapes/Circle';
 
 const DrawingCanvas = ({ sketchMode }) => {
 	const canvasRef = useRef(null);
@@ -12,11 +13,30 @@ const DrawingCanvas = ({ sketchMode }) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		const handleResize = () => {
+			if (canvasRef.current) {
+				canvasRef.current.width = window.innerWidth - 1;
+				canvasRef.current.height = window.innerHeight - 1;
+				if (canvasManager) {
+					canvasManager.render(sketchMode);
+				}
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
 	const handleMouseDown = useCallback(
 		(e) => {
 			if (!canvasManager) return;
-			const rect = new Rectangle(e.clientX, e.clientY, 50, 50);
-			canvasManager.addShape(rect);
+
+			const circle = new Circle(e.clientX, e.clientY, 50);
+			canvasManager.addShape(circle);
 			canvasManager.render(sketchMode);
 		},
 		[canvasManager, sketchMode]

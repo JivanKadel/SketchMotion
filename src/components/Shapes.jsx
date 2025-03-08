@@ -5,11 +5,13 @@ import {
 	LineAxis
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { useState } from 'react';
-// import { TypeContext } from '../../contexts/TypeContext';
 
-export default function Shapes() {
-	const [shape, setShape] = useState('line');
+export default function Shapes({ show = false, shape = 'line', setShape }) {
+	console.log(shape);
+
+	if (!show) {
+		return;
+	}
 	return (
 		<div className="shapes-list">
 			<Button
